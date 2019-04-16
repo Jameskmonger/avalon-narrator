@@ -1,5 +1,6 @@
 import * as React from "react";
 import { CharacterSelector, CharacterOptions } from "./character-selector";
+import { PromptReader } from "./prompt-reader";
 
 const App: React.FunctionComponent = props => {
     const [ choices, setChoices ] = React.useState<CharacterOptions>({
@@ -15,7 +16,7 @@ const App: React.FunctionComponent = props => {
 
             <CharacterSelector choices={choices} onChange={newChoices => setChoices(newChoices)} />
 
-            <div>{JSON.stringify(choices, null, 4)}</div>
+            <PromptReader choices={choices} />
         </div>
     );
 };
