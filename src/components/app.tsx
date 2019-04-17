@@ -17,6 +17,8 @@ const App: React.FunctionComponent = props => {
             <CharacterSelector choices={choices} onChange={newChoices => setChoices(newChoices)} />
 
             <PromptReader choices={choices} />
+
+            <p className="footer">Developed by James Monger. <a href="https://github.com/Jameskmonger/avalon-narrator">See source on GitHub</a></p>
         </div>
     );
 };
