@@ -175,6 +175,7 @@ var App = function (props) {
         morgana: false
     }), choices = _a[0], setChoices = _a[1];
     return (React.createElement("div", null,
+        React.createElement("h1", null, "Avalon Narrator"),
         React.createElement(character_selector_1.CharacterSelector, { choices: choices, onChange: function (newChoices) { return setChoices(newChoices); } }),
         React.createElement(prompt_reader_1.PromptReader, { choices: choices })));
 };
@@ -212,7 +213,8 @@ var CharacterSelector = function (_a) {
         var full = __assign({}, choices, update);
         onChange(full);
     };
-    return (React.createElement("div", null,
+    return (React.createElement("div", { className: "character-selector" },
+        React.createElement("h2", null, "Who's playing?"),
         React.createElement(checkbox_1.Checkbox, { checked: choices.percival, onChange: function (checked) { return updateChoice({ percival: checked }); } }),
         " Percival ",
         React.createElement("br", null),
@@ -408,7 +410,7 @@ var PromptReader = (function (_super) {
     }
     PromptReader.prototype.render = function () {
         var _a = this.state, prompts = _a.prompts, currentPrompt = _a.currentPrompt;
-        return (React.createElement("div", null,
+        return (React.createElement("div", { className: "prompt-reader" },
             React.createElement("button", { onClick: this.startNarration, disabled: currentPrompt !== null }, "Start narration"),
             prompts !== null
                 && React.createElement(prompt_list_1.PromptList, { prompts: prompts, currentPrompt: currentPrompt })));

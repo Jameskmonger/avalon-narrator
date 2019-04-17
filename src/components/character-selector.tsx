@@ -24,7 +24,9 @@ const CharacterSelector: React.FunctionComponent<CharacterSelectorProps> = ({ ch
     };
 
     return (
-        <div>
+        <div className="character-selector">
+            <h2>Who's playing?</h2>
+
             <Checkbox checked={choices.percival} onChange={checked => updateChoice({ percival: checked })} /> Percival <br />
             <Checkbox checked={choices.mordred} onChange={checked => updateChoice({ mordred: checked })} /> Mordred <br />
             <Checkbox checked={choices.oberon} onChange={checked => updateChoice({ oberon: checked })} /> Oberon <br />

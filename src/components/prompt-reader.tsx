@@ -23,7 +23,7 @@ export class PromptReader extends React.Component<PromptReaderProps, PromptReade
         const { prompts, currentPrompt } = this.state;
 
         return (
-            <div>
+            <div className="prompt-reader">
                 <button onClick={this.startNarration} disabled={currentPrompt !== null}>Start narration</button>
 
                 {
