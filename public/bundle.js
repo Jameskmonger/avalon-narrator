@@ -368,7 +368,8 @@ var PromptReader = (function (_super) {
                             return [3, 0];
                         case 3:
                             this.setState({
-                                currentPrompt: null
+                                currentPrompt: null,
+                                prompts: null
                             });
                             return [2];
                     }

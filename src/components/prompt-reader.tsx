@@ -54,7 +54,8 @@ export class PromptReader extends React.Component<PromptReaderProps, PromptReade
             }
 
             this.setState({
-                currentPrompt: null
+                currentPrompt: null,
+                prompts: null
             });
         });
     }
