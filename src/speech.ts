@@ -35,9 +35,15 @@ const getVoice = async () => {
         || voices.find(v => v.lang === "en-US");
 };
 
+const replaceNames = (text: string) => {
+    return text.replace(/percival/i, "Purr sieve all")
+        .replace(/morgana/i, "More garner")
+        .replace(/oberon/i, "Oberohn");
+};
+
 export const speak = (text: string, endDelay: number) => {
     return new Promise<void>(async resolve => {
-        const utterance = new SpeechSynthesisUtterance(text);
+        const utterance = new SpeechSynthesisUtterance(replaceNames(text));
         storeUtteranceToPreventGC(utterance);
 
         utterance.voice = await getVoice();

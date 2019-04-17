@@ -520,6 +520,11 @@ var getVoice = function () { return __awaiter(_this, void 0, void 0, function ()
         }
     });
 }); };
+var replaceNames = function (text) {
+    return text.replace(/percival/i, "Purr sieve all")
+        .replace(/morgana/i, "More garner")
+        .replace(/oberon/i, "Oberohn");
+};
 exports.speak = function (text, endDelay) {
     return new Promise(function (resolve) { return __awaiter(_this, void 0, void 0, function () {
         var utterance, _a;
@@ -527,7 +532,7 @@ exports.speak = function (text, endDelay) {
         return __generator(this, function (_b) {
             switch (_b.label) {
                 case 0:
-                    utterance = new SpeechSynthesisUtterance(text);
+                    utterance = new SpeechSynthesisUtterance(replaceNames(text));
                     storeUtteranceToPreventGC(utterance);
                     _a = utterance;
                     return [4, getVoice()];
