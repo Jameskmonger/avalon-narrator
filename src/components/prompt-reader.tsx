@@ -2,29 +2,86 @@ import * as React from "react";
 import { getPrompts } from "avalon-prompts";
 import { CharacterOptions } from "./character-selector";
 import { PromptList } from "./prompt-list";
+import { speak } from "../speech";
 
 interface PromptReaderProps {
     choices: CharacterOptions;
 }
 
-const PromptReader: React.FunctionComponent<PromptReaderProps> = ({ choices }) => {
-    const [ currentPrompt, setCurrentPrompt ] = React.useState<number>(null);
-    const [ prompts, setPrompts ] = React.useState<string[]>(null);
+interface PromptReaderState {
+    prompts: string[];
+    currentPrompt: number;
+}
 
-    const startNarration = () => {
-        const newPrompts = getPrompts(choices);
-
-        setPrompts(newPrompts);
-        setCurrentPrompt(0);
+export class PromptReader extends React.Component<PromptReaderProps, PromptReaderState> {
+    public state = {
+        prompts: null,
+        currentPrompt: null
     };
 
-    return (
-        <div>
-            <button onClick={startNarration}>Start narration</button>
+    public render() {
+        const { prompts, currentPrompt } = this.state;
 
-            <PromptList prompts={prompts} currentPrompt={currentPrompt} />
-        </div>
-    );
-};
+        return (
+            <div>
+                <button onClick={this.startNarration} disabled={currentPrompt !== null}>Start narration</button>
 
-export { PromptReader };
+                {
+                    prompts !== null
+                    && <PromptList prompts={prompts} currentPrompt={currentPrompt} />
+                }
+            </div>
+        );
+    }
+
+    private startNarration = () => {
+        const newPrompts = getPrompts(this.props.choices);
+
+        this.setState({
+            prompts: newPrompts,
+            currentPrompt: 0
+        }, async () => {
+            while (true) {
+                await this.narrateCurrentPrompt();
+
+                const next = this.getNextPrompt();
+
+                if (next === null) {
+                    break;
+                }
+
+                await this.moveToPrompt(next);
+            }
+
+            this.setState({
+                currentPrompt: null
+            });
+        });
+    }
+
+    private getNextPrompt = () => {
+        const { prompts, currentPrompt } = this.state;
+
+        if (prompts === null || currentPrompt === null) {
+            return null;
+        }
+
+        const nextPrompt = currentPrompt + 1;
+
+        return nextPrompt >= prompts.length ? null : nextPrompt;
+    }
+
+    private narrateCurrentPrompt = async () => {
+        const { prompts, currentPrompt } = this.state;
+
+        await speak(prompts[currentPrompt], 1000);
+    }
+
+    private moveToPrompt = (index: number) => {
+        return new Promise<void>(resolve => {
+            this.setState({
+                currentPrompt: index
+            }, resolve);
+        });
+    }
+}

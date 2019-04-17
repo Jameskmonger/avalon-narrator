@@ -12,8 +12,6 @@ const App: React.FunctionComponent = props => {
 
     return (
         <div>
-            <p>Hello</p>
-
             <CharacterSelector choices={choices} onChange={newChoices => setChoices(newChoices)} />
 
             <PromptReader choices={choices} />
